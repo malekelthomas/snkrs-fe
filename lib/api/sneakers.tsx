@@ -16,7 +16,7 @@ export const getBrands = async (): Promise<string[]> => {
 }
 
 export const getSneakersByBrand = async (brand: string): Promise<Sneaker[]> => {
-   return apiWrapper(`${APIGroup}/${brand}`, {
+   return apiWrapper(`${APIGroup}/brands/${brand}/`, {
       method: HTTPMethod.GET,
    })
 }
