@@ -4,6 +4,7 @@ import moment from 'moment'
 import { GetServerSideProps, NextPage } from 'next'
 import { Sneaker } from '../../lib/model/sneaker'
 import { getSneakers } from '../../lib/api/sneakers'
+import { useEffect } from 'react'
 
 type Props =  {
     error: string,
@@ -15,6 +16,18 @@ const Sneakers: NextPage<Props> = ({error, sneakers}) => {
     if (error){
         console.error(error)
     }
+    
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    useEffect(()=>{
+        shuffleArray(sneakers)
+    },[])
+    
     function newProduct(date:Date): boolean {
         let weekAgo = new Date()
         date.setDate(weekAgo.getDate()-12)
@@ -24,7 +37,6 @@ const Sneakers: NextPage<Props> = ({error, sneakers}) => {
     return (
         <>
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-            
             {sneakers.map(sneaker => {
                 <Box  maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
                     <Image src={sneaker.photos ? sneaker.photos[0] : ""} alt={sneaker.model}/>
