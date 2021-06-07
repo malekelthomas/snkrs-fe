@@ -15,42 +15,57 @@ const Sneakers: NextPage<Props> = ({error, sneakers}) => {
     if (error){
         console.error(error)
     }
-
     function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+        if (array != null){
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
         }
     }
-
-    useEffect(()=>{
-        shuffleArray(sneakers)
-    },[])
+    shuffleArray(sneakers)
     
-    function newProduct(date:Date): boolean {
+    function newProduct(product_date:Date): boolean {
+        if (product_date == undefined) {
+            return false
+        }
         let weekAgo = new Date()
-        date.setDate(weekAgo.getDate()-12)
+        weekAgo.setDate(weekAgo.getDate()-30)
+        let weekAgoTime = weekAgo.getTime()
         let today = new Date()
-        return date >= weekAgo && date <= today
+        let todayTime = today.getTime()
+        let product_dateTime = new Date(product_date).getTime()
+        return weekAgoTime <= product_dateTime && product_dateTime <= todayTime
     }
     return (
         <>
-        <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-            {sneakers.map(sneaker => {
-                <Box  maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-                    <Image src={sneaker.photos ? sneaker.photos[0] : ""} alt={sneaker.model}/>
-                    <Box p="6">
-                        <Box d="flex" alignItems="baseline">
-                            {newProduct(sneaker.release_date) && 
-                                <Badge borderRadius="full" px="2" colorScheme="red">
-                                    New
-                                </Badge>
-                            }
+            <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+                {sneakers && sneakers.map(sneaker => {
+                    return (
+                    <Box maxW="sm" borderWidth="5px" borderRadius="lg" overflow="hidden">
+                        <Image src={sneaker.photos ? sneaker.photos[0] : ""} alt={sneaker.model}/>
+                        <Box p="6">
+                            <Box d="flex" alignItems="baseline">
+                                {newProduct(sneaker.release_date) && 
+                                    <Badge borderRadius="full" px="2" colorScheme="red">
+                                        New Release
+                                    </Badge>
+                                }
+                            </Box>
+                            <Box
+                                mt="1"
+                                fontWeight="semibold"
+                                as="h4"
+                                lineHeight="tight"
+                                isTruncated
+                            >
+                                {sneaker.model}
+                            </Box>
                         </Box>
                     </Box>
-                </Box>
-        })}
-        </Grid>
+                    )
+                })}
+            </Grid>
         </>
     )
 }
