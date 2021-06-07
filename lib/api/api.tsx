@@ -6,7 +6,7 @@ switch (process.env.ENV) {
       break
 
    default:
-      APIDomain = 'localhost:7000/'
+      APIDomain = 'http://localhost:7000/'
       break
 }
 
