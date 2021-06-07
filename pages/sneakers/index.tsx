@@ -1,6 +1,5 @@
 import { Badge, Box } from '@chakra-ui/layout'
-import {Grid, GridItem, Image} from '@chakra-ui/react'
-import moment from 'moment'
+import {Grid, Image} from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import { Sneaker } from '../../lib/model/sneaker'
 import { getSneakers } from '../../lib/api/sneakers'
@@ -16,7 +15,7 @@ const Sneakers: NextPage<Props> = ({error, sneakers}) => {
     if (error){
         console.error(error)
     }
-    
+
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
