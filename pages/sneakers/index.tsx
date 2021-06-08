@@ -2,43 +2,27 @@ import { Badge, Box } from '@chakra-ui/layout'
 import {Grid, Image} from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import { Sneaker } from '../../lib/model/sneaker'
-import { getSneakers } from '../../lib/api/sneakers'
+import { getSneakers, getBrands } from '../../lib/api/sneakers';
 import { useEffect } from 'react'
+import { newProduct, shuffleArray, formatName } from '../../lib/helpers/helpers';
+import Menu from '../../components/menu/menu'
 
 type Props =  {
     error: string,
     sneakers: Sneaker[]
+    brands: string[]
 }
 
-const Sneakers: NextPage<Props> = ({error, sneakers}) => {
+const Sneakers: NextPage<Props> = ({error, sneakers, brands}) => {
 
     if (error){
         console.error(error)
     }
-    function shuffleArray(array) {
-        if (array != null){
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-    }
-    shuffleArray(sneakers)
     
-    function newProduct(product_date:Date): boolean {
-        if (product_date == undefined) {
-            return false
-        }
-        let weekAgo = new Date()
-        weekAgo.setDate(weekAgo.getDate()-30)
-        let weekAgoTime = weekAgo.getTime()
-        let today = new Date()
-        let todayTime = today.getTime()
-        let product_dateTime = new Date(product_date).getTime()
-        return weekAgoTime <= product_dateTime && product_dateTime <= todayTime
-    }
+    shuffleArray(sneakers)
     return (
         <>
+        <Menu brands={brands} />
             <Grid templateColumns="repeat(5, 1fr)" gap={6}>
                 {sneakers && sneakers.map(sneaker => {
                     return (
@@ -59,7 +43,7 @@ const Sneakers: NextPage<Props> = ({error, sneakers}) => {
                                 lineHeight="tight"
                                 isTruncated
                             >
-                                {sneaker.model}
+                                {sneaker.model ? formatName(sneaker.model) : ""}
                             </Box>
                         </Box>
                     </Box>
@@ -75,17 +59,20 @@ export default Sneakers
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const res = await getSneakers()
+        const brands = await getBrands()
         return {
             props: {
                 error:null,
-                sneakers: res
+                sneakers: res,
+                brands: brands
             }
         }
     } catch (err) {
         return {
             props: {
                 error: err.message,
-                sneakers: null
+                sneakers: null,
+                brands: null
             }
         }
     }

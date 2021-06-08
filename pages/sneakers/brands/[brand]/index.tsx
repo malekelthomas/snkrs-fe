@@ -4,6 +4,7 @@ import {GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { Sneaker } from '../../../../lib/model/sneaker'
 import { getSneakersByBrand } from '../../../../lib/api/sneakers';
 import { getBrands } from '../../../../lib/api/sneakers';
+import { shuffleArray, newProduct, formatName, formatBrandName } from '../../../../lib/helpers/helpers';
 
 type Props =  {
     error: string,
@@ -11,36 +12,18 @@ type Props =  {
     brand: string
 }
 
+
+
 const SneakersByBrand: NextPage<Props> = ({error, sneakers, brand}) => {
 
     if (error){
         console.error(error)
     }
-    function shuffleArray(array) {
-        if (array != null){
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-    }
     shuffleArray(sneakers)
-    function newProduct(product_date:Date): boolean {
-        if (product_date == undefined) {
-            return false
-        }
-        let weekAgo = new Date()
-        weekAgo.setDate(weekAgo.getDate()-30)
-        let weekAgoTime = weekAgo.getTime()
-        let today = new Date()
-        let todayTime = today.getTime()
-        let product_dateTime = new Date(product_date).getTime()
-        return weekAgoTime <= product_dateTime && product_dateTime <= todayTime
-    }
     return (
         <>
         <Flex justifyContent={"center"}>
-            <Heading>{brand[0].toUpperCase()+brand.slice(1).toLowerCase()}</Heading>
+            <Heading>{formatBrandName(brand)}</Heading>
         </Flex>
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
             {sneakers && sneakers.map(sneaker => (
@@ -54,6 +37,15 @@ const SneakersByBrand: NextPage<Props> = ({error, sneakers, brand}) => {
                                 </Badge>
                             }
                         </Box>
+                        <Box
+                                mt="1"
+                                fontWeight="semibold"
+                                as="h4"
+                                lineHeight="tight"
+                                isTruncated
+                            >
+                                {sneaker.model ? formatName(sneaker.model) : ""}
+                            </Box>
                     </Box>
                 </Box>
         ))}
