@@ -4,7 +4,7 @@ export interface Sneaker {
    sku: string
    release_date: Date
    photos?: string
-   site_sizes_prices?: SiteSizePrice
+   sites_sizes_prices?: SiteSizePrice
 }
 
 export interface SiteSizePrice {

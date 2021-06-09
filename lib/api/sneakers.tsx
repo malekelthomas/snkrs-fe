@@ -20,3 +20,9 @@ export const getSneakersByBrand = async (brand: string): Promise<Sneaker[]> => {
       method: HTTPMethod.GET,
    })
 }
+
+export const getSneakerByModel = async (model: string): Promise<Sneaker[]> => {
+   return apiWrapper(`${APIGroup}/${model}/`, {
+      method: HTTPMethod.GET,
+   })
+}
