@@ -3,6 +3,7 @@ import MenuContainer from "./menu_container";
 import MenuToggle from "./menu_toggle"
 import Logo from './logo';
 import MenuLinks from "./menu_links";
+import CartIcon from "../cart/cart";
 
 
 const Menu = (props) => {
@@ -18,6 +19,7 @@ const Menu = (props) => {
             />
             <MenuToggle toggle={toggle} isOpen={isOpen}/>
             <MenuLinks brands={props.brands} isOpen={isOpen}/>
+            <CartIcon/>
         </MenuContainer>
     )
 }
