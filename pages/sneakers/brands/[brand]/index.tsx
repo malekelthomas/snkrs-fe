@@ -5,16 +5,19 @@ import { Sneaker } from '../../../../lib/model/sneaker'
 import { getSneakersByBrand } from '../../../../lib/api/sneakers';
 import { getBrands } from '../../../../lib/api/sneakers';
 import { shuffleArray, newProduct, formatName, formatBrandName } from '../../../../lib/helpers/helpers';
+import Menu from '../../../../components/menu/menu';
+import SneakerCard from '../../../../components/sneaker/SneakerCard';
 
 type Props =  {
     error: string,
     sneakers: Sneaker[]
-    brand: string
+    brand: string,
+    brands: string[]
 }
 
 
 
-const SneakersByBrand: NextPage<Props> = ({error, sneakers, brand}) => {
+const SneakersByBrand: NextPage<Props> = ({error, sneakers, brand, brands}) => {
 
     if (error){
         console.error(error)
@@ -22,32 +25,13 @@ const SneakersByBrand: NextPage<Props> = ({error, sneakers, brand}) => {
     shuffleArray(sneakers)
     return (
         <>
+        <Menu brands={brands}/>
         <Flex justifyContent={"center"}>
             <Heading>{formatBrandName(brand)}</Heading>
         </Flex>
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-            {sneakers && sneakers.map(sneaker => (
-                <Box  maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-                    <Image src={sneaker.photos ? sneaker.photos[0] : ""} alt={sneaker.model}/>
-                    <Box p="6">
-                        <Box d="flex" alignItems="baseline">
-                            {newProduct(sneaker.release_date) && 
-                                <Badge borderRadius="full" px="2" colorScheme="red">
-                                    New Release
-                                </Badge>
-                            }
-                        </Box>
-                        <Box
-                                mt="1"
-                                fontWeight="semibold"
-                                as="h4"
-                                lineHeight="tight"
-                                isTruncated
-                            >
-                                {sneaker.model ? formatName(sneaker.model) : ""}
-                            </Box>
-                    </Box>
-                </Box>
+            {sneakers && sneakers.map((sneaker:Sneaker) => (
+                <SneakerCard sneaker={sneaker}/>
         ))}
         </Grid>
         </>
@@ -70,12 +54,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const {brand} = context.params
     try {
-        const res = await getSneakersByBrand(brand as string)
+        const sneakers = await getSneakersByBrand(brand as string)
+        const brands = await getBrands()
         return {
             props: {
                 error:null,
                 brand,
-                sneakers: res
+                brands,
+                sneakers
             }
         }
     } catch (err) {
