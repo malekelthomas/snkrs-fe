@@ -9,7 +9,7 @@ import { Sneaker } from '../../lib/model/sneaker';
 const SneakerCard = ({sneaker}) => {
 
     return (
-        <Link href={`/sneakers/brands/${sneaker.brand}/${encodeURI(sneaker.model)}`}>
+        <Link href={`/sneakers/brands/${sneaker.brand}/${encodeURIComponent(sneaker.model)}`}>
             <Box as="button" maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
                         <Image src={sneaker.photos ? sneaker.photos[0] : ""} alt={sneaker.model}/>
                         <Box p="6">
