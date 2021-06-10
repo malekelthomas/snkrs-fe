@@ -18,17 +18,19 @@ const SneakerInfo:NextPage<Props> = ({sneaker, brands}) => {
     return (
         <>
         <Menu brands={brands}/>
-            <Flex>
+            <Flex justifyContent="center">
                 {sneaker &&
                     <>
                         <Box>
                             <Image src={sneaker.photos ? sneaker.photos[0] : ""} alt={sneaker.model}/>
                             <Text>{sneaker.release_date ? `Release Date: ${sneaker.release_date}` : ""}</Text>
                         </Box>
-                        <Box>
-                            <Text>{`${formatBrandName(sneaker.brand)} ${formatName(sneaker.model)}`}</Text>
-                            <SneakerSelector sneaker={sneaker}/>
-                        </Box>
+                        <Flex flexDirection="column" justifyContent="center">
+                            <Box>
+                                <Text>{`${formatBrandName(sneaker.brand)} ${formatName(sneaker.model)}`}</Text>
+                                <SneakerSelector sneaker={sneaker}/>
+                            </Box>
+                        </Flex>
 
                     </>
                 }
@@ -48,10 +50,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
        getSneakersByBrand(brand)
        .then(sneakers => {
            sneakers.map((sneaker) => {
+               let model = encodeURIComponent(sneaker.model)
                params.push(
                 {params: {
                     brand: brand,
-                    model: encodeURI(sneaker.model)
+                    model: model
                 }}
                 ) 
            })
@@ -68,8 +71,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const {model} = context.params
+    let modelName = decodeURIComponent(model as string)
     try {
-        const sneaker = await getSneakerByModel(model as string)
+        const sneaker = await getSneakerByModel(modelName)
         const brands = await getBrands()
         return {
             props: {
