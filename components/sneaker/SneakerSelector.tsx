@@ -1,7 +1,7 @@
 import { Select } from '@chakra-ui/select'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import { Sneaker, SiteSoldOn, SizePrice } from '../../lib/model/sneaker'
+import { Sneaker, SiteSoldOn, SizePrice } from '../../lib/model/Sneaker'
 
 type Props = {
    sneaker: Sneaker

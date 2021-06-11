@@ -1,9 +1,9 @@
 import { Badge, Box, Flex, Heading } from '@chakra-ui/layout'
 import { Grid, Image } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { Sneaker } from '../../../../lib/model/sneaker'
-import { getSneakersByBrand } from '../../../../lib/api/sneakers'
-import { getBrands } from '../../../../lib/api/sneakers'
+import { Sneaker } from '../../../../lib/model/Sneaker'
+import { getSneakersByBrand } from '../../../../lib/api/Sneakers'
+import { getBrands } from '../../../../lib/api/Sneakers'
 import {
    shuffleArray,
    newProduct,

@@ -2,7 +2,7 @@ import { Box, Image, Badge } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
 import { newProduct, formatName } from '../../lib/helpers/helpers'
-import { Sneaker } from '../../lib/model/sneaker'
+import { Sneaker } from '../../lib/model/Sneaker'
 
 const SneakerCard = ({ sneaker }) => {
    return (

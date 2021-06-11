@@ -8,8 +8,8 @@ import {
    getSneakerByModel,
    getSneakers,
    getSneakersByBrand,
-} from '../../../../../lib/api/sneakers'
-import { Sneaker } from '../../../../../lib/model/sneaker'
+} from '../../../../../lib/api/Sneakers'
+import { Sneaker } from '../../../../../lib/model/Sneaker'
 import { formatBrandName, formatName } from '../../../../../lib/helpers/helpers'
 import SneakerSelector from '../../../../../components/sneaker/SneakerSelector'
 

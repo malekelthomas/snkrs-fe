@@ -1,5 +1,5 @@
-import { Sneaker } from '../model/sneaker'
-import { apiWrapper, HTTPMethod } from './api'
+import { Sneaker } from '../model/Sneaker'
+import { apiWrapper, HTTPMethod } from './API'
 
 const APIGroup = 'sneakers'
 
