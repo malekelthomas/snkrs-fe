@@ -11,8 +11,9 @@ import {
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
-import { User } from '../lib/model/User'
+import { User, UserRole } from '../lib/model/User'
 import { registerUser } from '../lib/api/User'
+import { supabase } from '../lib/supabase/Supabase'
 
 const Register = () => {
    const [show, setShow] = React.useState(false)
@@ -30,9 +31,34 @@ const Register = () => {
                      password: '',
                   }}
                   onSubmit={(values, actions) => {
-                     registerUser(values as User)
-                        .then((res) => console.log(res))
+                     let user = values as User
+                     user.user_role = UserRole.Customer
+                     //register user in supabase
+                     supabase.auth
+                        .signUp({
+                           email: user.email,
+                           password: user.password,
+                        })
+                        .then((res) => {
+                           if (res.user) {
+                               //set user authid to id from supabase
+                              user.auth_id = res.user.id
+                           } else {
+                              console.log(
+                                 'no user in response from supabase',
+                                 res
+                              )
+                           }
+                        })
                         .catch((e) => console.log(e))
+                     if (user.auth_id !== '' || user.auth_id == undefined) {
+                        registerUser(user)
+                           .then((res) => {
+                              console.log(res)
+                              window.location.href = `/sneakers/`
+                           })
+                           .catch((e) => console.log(e))
+                     }
                   }}
                >
                   <Form>

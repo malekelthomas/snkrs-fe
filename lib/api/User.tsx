@@ -3,10 +3,10 @@ import { apiWrapper, HTTPMethod } from './API'
 
 const APIGroup = 'users'
 export const registerUser = async (user: User): Promise<User> => {
-   return apiWrapper(`${APIGroup}`, {
+   return apiWrapper(`${APIGroup}/register/`, {
       method: HTTPMethod.POST,
       body: {
-         user,
+         user: user,
       },
    })
 }
