@@ -30,7 +30,7 @@ const UserIcon = () => {
                   <Link href="/login">
                      <Text as="button">Login</Text>
                   </Link>
-                  <Divider/>
+                  <Divider />
                   <Link href="/register">
                      <Text as="button">Register</Text>
                   </Link>

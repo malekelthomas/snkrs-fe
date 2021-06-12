@@ -41,9 +41,9 @@ const CartIcon = () => {
             <PopoverCloseButton />
             <PopoverHeader>Cart</PopoverHeader>
             <PopoverBody>
-            {items && (
-               <Box p="3">
-               {items.map((item) => (
+               {items && (
+                  <Box p="3">
+                     {items.map((item) => (
                         <Box d="flex" alignItems="baseline">
                            <Box p="1">
                               <Image
@@ -71,10 +71,10 @@ const CartIcon = () => {
                               </Box>
                            </Flex>
                         </Box>
-                  ))}
-                     </Box>
-            )}
-               </PopoverBody>
+                     ))}
+                  </Box>
+               )}
+            </PopoverBody>
 
             <PopoverFooter>
                <Text>
