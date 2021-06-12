@@ -22,14 +22,17 @@ import qs from 'query-string'
 import { CartItem } from '../../../lib/model/Cart'
 import { useState } from 'react'
 import SneakerCard from '../../../components/sneaker/SneakerCard'
-
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
+import {useRouter } from 'next/router'
+import PaginateArrows from '../../../components/Pagination';
 type Props = {
    sneakers: Sneaker[]
    brands: string[]
    error: string
+   page: string
 }
 
-const Sneakers: NextPage<Props> = ({ error, sneakers, brands }) => {
+const Sneakers: NextPage<Props> = ({ error, sneakers, brands, page }) => {
    if (error) {
       console.error(error)
    }
@@ -38,10 +41,14 @@ const Sneakers: NextPage<Props> = ({ error, sneakers, brands }) => {
    return (
       <>
          <Menu brands={brands} />
-         <Grid templateColumns="repeat(5, 1fr)" gap={5}>
-            {sneakers &&
-               sneakers.map((sneaker) => <SneakerCard sneaker={sneaker} />)}
-         </Grid>
+            <PaginateArrows page={page} url={"/sneakers"}/>
+         <Flex justifyContent="center">
+               <Grid templateColumns="repeat(5, 1fr)" gap={5}>
+                  {sneakers &&
+                     sneakers.map((sneaker) => <SneakerCard sneaker={sneaker} />)}
+               </Grid>
+
+         </Flex>
       </>
    )
 }
@@ -76,6 +83,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
          props: {
             sneakers,
             brands,
+            page: params.page
          },
       }
    } catch (err) {

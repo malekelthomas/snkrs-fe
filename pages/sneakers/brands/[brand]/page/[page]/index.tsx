@@ -19,12 +19,14 @@ import qs from 'query-string'
 import { CartItem } from '../../../../../../lib/model/Cart'
 import { useState } from 'react'
 import SneakerCard from '../../../../../../components/sneaker/SneakerCard'
+import PaginateArrows from '../../../../../../components/Pagination'
 
 type Props = {
    error: string
    sneakers: Sneaker[]
    brand: string
-   brands: string[]
+   brands: string[],
+   page: string
 }
 
 const SneakersByBrand: NextPage<Props> = ({
@@ -32,17 +34,18 @@ const SneakersByBrand: NextPage<Props> = ({
    sneakers,
    brand,
    brands,
+   page
 }) => {
    if (error) {
       console.error(error)
    }
-   shuffleArray(sneakers)
    return (
       <>
          <Menu brands={brands} />
          <Flex justifyContent={'center'}>
             <Heading>{brand ? formatBrandName(brand): ''}</Heading>
          </Flex>
+         <PaginateArrows page={page} url={`/sneakers/brands/${brand}/page`}/>
          <Grid templateColumns="repeat(5, 1fr)" gap={6}>
             {sneakers &&
                sneakers.map((sneaker: Sneaker) => (
@@ -92,6 +95,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             brand,
             brands,
             sneakers,
+            page
          },
       }
    } catch (err) {

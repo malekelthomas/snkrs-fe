@@ -21,7 +21,7 @@ const MenuLinks = ({ isOpen, brands }) => {
          >
             {brands &&
                brands.map((brand, i) => {
-                  let route = `/sneakers/brands/${brand}/`
+                  let route = `/sneakers/brands/${brand}/page/1`
                   return (
                      <MenuItem
                         to={route}
