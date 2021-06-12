@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const Logo = (props) => {
    return (
-      <Link href="/sneakers">
+      <Link href="/sneakers/1">
          <Box as="button" {...props}>
             <Text fontSize="lg" fontWeight="bold">
                SNKRZ

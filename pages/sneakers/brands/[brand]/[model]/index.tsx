@@ -15,12 +15,19 @@ import SneakerSelector from '../../../../../components/sneaker/SneakerSelector'
 import qs from 'query-string'
 import { CartItem } from '../../../../../lib/model/Cart'
 import { useState } from 'react'
+import router from 'next/router'
 
 type Props = {
    sneaker: Sneaker
    brands: string[]
 }
 const SneakerInfo: NextPage<Props> = ({ sneaker, brands }) => {
+
+   if (router.isFallback){
+      return (
+         <div>Loading...</div>
+      )
+   }
    return (
       <>
          <Menu brands={brands} />
