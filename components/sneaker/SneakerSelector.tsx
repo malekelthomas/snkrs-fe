@@ -26,13 +26,14 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
          model: sneaker.model,
          photo: sneaker.photos ? sneaker.photos[0] : '',
          quantity: 1,
+         site: selectedSite,
       }
       setCartItem(addedCartItem)
       toast({
-         title: `Added ${formattedName} to cart`,
-         status: "success",
+         title: `Added '${formattedName}' from '${selectedSite}' to cart`,
+         status: 'success',
          duration: 1000,
-         isClosable: true
+         isClosable: true,
       })
       dispatch(addToCart(addedCartItem))
    }

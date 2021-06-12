@@ -7,6 +7,7 @@ import {
    PopoverCloseButton,
    Text,
    Divider,
+   Flex,
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
@@ -23,19 +24,28 @@ const UserIcon = () => {
             </Button>
          </PopoverTrigger>
          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            {!user.auth_id && (
-               <>
-                  <Link href="/login">
-                     <Text as="button">Login</Text>
+            <Flex justifyContent="space-evenly">
+               <PopoverArrow />
+               <PopoverCloseButton />
+               {user.auth_id == undefined ||
+                  (user.auth_id == '' && (
+                     <>
+                        <Link href="/login">
+                           <Text as="button">Login</Text>
+                        </Link>
+                        <Divider />
+                        <Link href="/register">
+                           <Text as="button">Register</Text>
+                        </Link>
+                     </>
+                  ))}
+
+               {user.auth_id.length > 0 && (
+                  <Link href="#">
+                     <Text as="button">My Orders</Text>
                   </Link>
-                  <Divider />
-                  <Link href="/register">
-                     <Text as="button">Register</Text>
-                  </Link>
-               </>
-            )}
+               )}
+            </Flex>
          </PopoverContent>
       </Popover>
    )

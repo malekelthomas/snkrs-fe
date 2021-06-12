@@ -10,6 +10,7 @@ const SneakerCard = ({ sneaker }) => {
          href={`/sneakers/brands/${sneaker.brand}/${encodeURIComponent(
             sneaker.model
          )}`}
+         passHref={true}
       >
          <Box
             as="button"

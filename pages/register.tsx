@@ -63,7 +63,7 @@ const Register = () => {
                         }
                      })
                      .catch((e) => console.log(e))
-                  if (user.auth_id !== null && user.auth_id !== '') {
+                  if (user.auth_id !== undefined) {
                      registerUser(user)
                         .then((res) => {
                            console.log(res)

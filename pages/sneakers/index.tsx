@@ -24,7 +24,7 @@ const Sneakers: NextPage<Props> = ({ error, sneakers, brands }) => {
    return (
       <>
          <Menu brands={brands} />
-         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+         <Grid templateColumns="repeat(5, 1fr)" gap={5}>
             {sneakers &&
                sneakers.map((sneaker) => <SneakerCard sneaker={sneaker} />)}
          </Grid>

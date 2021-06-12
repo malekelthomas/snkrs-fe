@@ -1,4 +1,5 @@
-import { CartItem } from '../model/Cart'
+import { CartItem, ShippingMethod } from '../model/Cart'
+import { $enum } from 'ts-enum-util'
 
 export function newProduct(product_date: Date): boolean {
    if (product_date == undefined) {
@@ -40,4 +41,32 @@ export function getIndexOfCartItem(item: CartItem, array: CartItem[]): number {
       }
    })
    return index
+}
+
+export function calculateDeliveryDate(shipping_method: ShippingMethod): string {
+   let today = new Date().getDate()
+   let deliveryDate = new Date()
+   /* switch (shipping_method) {
+      case ShippingMethod.NextDay:
+         deliveryDate.setDate(today + 1)
+         break
+      case ShippingMethod.TwoDay:
+         deliveryDate.setDate(today + 2)
+         break
+      case ShippingMethod.ThreeDay:
+         deliveryDate.setDate(today + 3)
+         break
+      default:
+         break
+   } */
+
+   $enum(ShippingMethod).map((v, k, e, i) => {
+      if (v == shipping_method) {
+         deliveryDate.setDate(today + i+1)
+      }
+   })
+
+   let dtf = new Intl.DateTimeFormat
+   return dtf.format(deliveryDate)
+ 
 }
