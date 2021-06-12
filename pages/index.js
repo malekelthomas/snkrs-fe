@@ -15,7 +15,7 @@ const Home = () => {
 
          <main className={styles.main}>
             <h1>Welcome to my first Next.js app! SNKRZ</h1>
-            <Link href="/sneakers" passHref={true}>
+            <Link href="/sneakers/1" passHref={true}>
                <Text as="button" fontSize="lg" color="green.300">
                   Get Started Here!
                </Text>
