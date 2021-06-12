@@ -5,6 +5,6 @@ const APIGroup = 'users'
 export const registerUser = async (user: User): Promise<User> => {
    return apiWrapper(`${APIGroup}/register/`, {
       method: HTTPMethod.POST,
-      body: {...user},
+      body: { ...user },
    })
 }

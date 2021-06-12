@@ -62,11 +62,10 @@ export function calculateDeliveryDate(shipping_method: ShippingMethod): string {
 
    $enum(ShippingMethod).map((v, k, e, i) => {
       if (v == shipping_method) {
-         deliveryDate.setDate(today + i+1)
+         deliveryDate.setDate(today + i + 1)
       }
    })
 
-   let dtf = new Intl.DateTimeFormat
+   let dtf = new Intl.DateTimeFormat()
    return dtf.format(deliveryDate)
- 
 }
