@@ -35,7 +35,7 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
       if (e.target.value !== '') {
          let sizePrice = e.target.value.split(' ')
          let size = sizePrice[0].split(':')[1]
-         let price = parseFloat(sizePrice[1].split('$')[1])
+         let price = parseFloat(sizePrice[1].split('$')[1].replace(/,/g, '')) //split by $, remove commas and parse
          setSelectedSize(true)
          let updatedCartItem = { ...cartItem }
          updatedCartItem.size = size
