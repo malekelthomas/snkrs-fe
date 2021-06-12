@@ -3,9 +3,10 @@ import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import { Sneaker, SiteSoldOn, SizePrice } from '../../lib/model/Sneaker'
 import { CartItem } from '../../lib/model/Cart'
-import { Box, Button } from '@chakra-ui/react'
+import { Box, Button, useToast } from '@chakra-ui/react'
 import { useAppDispatch } from '../../hooks'
 import { addToCart } from '../../store/slices/cartSlice'
+import { formatName } from '../../lib/helpers/helpers'
 
 type Props = {
    sneaker: Sneaker
@@ -15,7 +16,10 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
    const [selectedSize, setSelectedSize] = useState<boolean>(false)
    const [cartItem, setCartItem] = useState<CartItem>()
 
+   const formattedName = formatName(sneaker.model)
+
    const dispatch = useAppDispatch()
+   const toast = useToast()
    const AddToCart = () => {
       let addedCartItem = {
          ...cartItem,
@@ -24,6 +28,12 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
          quantity: 1,
       }
       setCartItem(addedCartItem)
+      toast({
+         title: `Added ${formattedName} to cart`,
+         status: "success",
+         duration: 50,
+         isClosable: true
+      })
       dispatch(addToCart(addedCartItem))
    }
 
