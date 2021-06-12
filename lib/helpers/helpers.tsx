@@ -1,4 +1,4 @@
-import { CartItem } from "../model/Cart"
+import { CartItem } from '../model/Cart'
 
 export function newProduct(product_date: Date): boolean {
    if (product_date == undefined) {
@@ -32,10 +32,10 @@ export function formatBrandName(name: string): string {
    return name[0].toUpperCase() + name.slice(1).toLowerCase()
 }
 
-export function getIndexOfCartItem(item:CartItem, array:CartItem[]): number {
+export function getIndexOfCartItem(item: CartItem, array: CartItem[]): number {
    let index = -1
    array.map((el, i) => {
-      if (el.model == item.model){
+      if (el.model == item.model && el.size == item.size) {
          index = i
       }
    })

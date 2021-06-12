@@ -1,7 +1,6 @@
 import {
    Box,
    Button,
-   Flex,
    FormControl,
    FormHelperText,
    FormLabel,
@@ -10,20 +9,20 @@ import {
    InputRightElement,
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
-import React from 'react'
-import { User, UserRole } from '../lib/model/User'
+import React, { useState } from 'react'
+import { useAppSelector, useAppDispatch } from '../hooks'
 import { registerUser } from '../lib/api/User'
+import { User, UserRole } from '../lib/model/User'
 import { supabase } from '../lib/supabase/Supabase'
-import { useDispatch } from 'react-redux'
-import { useAppDispatch, useAppSelector } from '../hooks'
 import { setUser } from '../store/slices/userSlice'
 
-const Register = () => {
-   const [show, setShow] = React.useState(false)
+const Login = () => {
+   const [show, setShow] = useState(false)
    const handleClick = () => setShow(!show)
-
+   const [error, setError] = useState('')
    const user = useAppSelector((state) => state.user)
    const dispatch = useAppDispatch()
+
    return (
       <>
          <Box
@@ -47,31 +46,27 @@ const Register = () => {
                      user_role: UserRole.Customer,
                      email: values.email,
                   }
-                  user.user_role = UserRole.Customer
                   //register user in supabase
                   supabase.auth
-                     .signUp({
+                     .signIn({
                         email: user.email,
                         password: values.password,
                      })
                      .then((res) => {
                         if (res.user) {
-                           //set user authid to id from supabase
                            user.auth_id = res.user.id
-                        } else {
-                           console.log('no user in response from supabase', res)
                         }
                      })
-                     .catch((e) => console.log(e))
-                  if (user.auth_id !== null && user.auth_id !== '') {
-                     registerUser(user)
-                        .then((res) => {
-                           console.log(res)
+                     .finally(() => {
+                        if (user.auth_id !== undefined) {
                            dispatch(setUser(user))
                            window.location.href = `/sneakers/`
-                        })
-                        .catch((e) => console.log(e))
-                  }
+                        }
+                     })
+                     .catch((e) => {
+                        console.log(e)
+                        setError(e.error_description)
+                     })
                }}
             >
                <Form>
@@ -83,22 +78,6 @@ const Register = () => {
                            <FormHelperText>
                               We'll never share your email.
                            </FormHelperText>
-                        </FormControl>
-                     )}
-                  </Field>
-                  <Field name="first_name">
-                     {({ field, form }) => (
-                        <FormControl id="first_name" isRequired>
-                           <FormLabel>First Name</FormLabel>
-                           <Input {...field} id="first_name" />
-                        </FormControl>
-                     )}
-                  </Field>
-                  <Field name="last_name">
-                     {({ field, form }) => (
-                        <FormControl id="last__name" isRequired>
-                           <FormLabel>Last Name</FormLabel>
-                           <Input {...field} id="last__name" />
                         </FormControl>
                      )}
                   </Field>
@@ -130,8 +109,9 @@ const Register = () => {
                </Form>
             </Formik>
          </Box>
+         {error && <div>{error}</div>}
       </>
    )
 }
 
-export default Register
+export default Login

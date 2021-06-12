@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/layout'
-import { Image } from '@chakra-ui/react'
+import { Button, Image } from '@chakra-ui/react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import React from 'react'
 import Menu from '../../../../../components/menu/menu'
@@ -12,6 +12,9 @@ import {
 import { Sneaker } from '../../../../../lib/model/Sneaker'
 import { formatBrandName, formatName } from '../../../../../lib/helpers/helpers'
 import SneakerSelector from '../../../../../components/sneaker/SneakerSelector'
+import qs from 'query-string'
+import { CartItem } from '../../../../../lib/model/Cart'
+import { useState } from 'react'
 
 type Props = {
    sneaker: Sneaker
@@ -37,9 +40,7 @@ const SneakerInfo: NextPage<Props> = ({ sneaker, brands }) => {
                   </Box>
                   <Flex flexDirection="column" justifyContent="center">
                      <Box>
-                        <Text>{`${formatBrandName(sneaker.brand)} ${formatName(
-                           sneaker.model
-                        )}`}</Text>
+                        <Text>{`${formatName(sneaker.model)}`}</Text>
                         <SneakerSelector sneaker={sneaker} />
                      </Box>
                   </Flex>
