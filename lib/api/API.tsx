@@ -2,7 +2,7 @@ export let APIDomain
 
 switch (process.env.ENV) {
    case 'production':
-      APIDomain = '/'
+      APIDomain = 'https://snkrz-api.herokuapp.com/'
       break
 
    default:
