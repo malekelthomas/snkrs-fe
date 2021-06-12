@@ -31,7 +31,7 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
       toast({
          title: `Added ${formattedName} to cart`,
          status: "success",
-         duration: 50,
+         duration: 1000,
          isClosable: true
       })
       dispatch(addToCart(addedCartItem))
