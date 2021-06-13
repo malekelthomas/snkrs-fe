@@ -27,6 +27,7 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
          photo: sneaker.photos ? sneaker.photos[0] : '',
          quantity: 1,
          site: selectedSite,
+         brand: sneaker.brand
       }
       setCartItem(addedCartItem)
       toast({

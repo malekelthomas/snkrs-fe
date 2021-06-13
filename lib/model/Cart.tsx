@@ -5,6 +5,7 @@ export interface CartItem {
    quantity: number
    price: number
    photo?: string
+   brand: string //needed for wrapping link on item in cart component
 }
 
 export interface CheckoutRequest {

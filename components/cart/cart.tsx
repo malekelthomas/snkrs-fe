@@ -42,6 +42,7 @@ const CartIcon = () => {
    }
 
    const [order, setOrder] = useState<Order>()
+   const [popOverOpen, setPopOverOpen] = useState<boolean>(false);
 
    const checkout = () => {
       let cr: CheckoutRequest = {
@@ -87,10 +88,14 @@ const CartIcon = () => {
             })
       }
    }
+
+   const clickedItem = () => {
+      setPopOverOpen(!popOverOpen)
+   }
    return (
-      <Popover>
+      <Popover isOpen={popOverOpen}>
          <PopoverTrigger>
-            <Button>
+            <Button onClick={clickedItem}>
                <AiOutlineShoppingCart size="25px" color="black" />
             </Button>
          </PopoverTrigger>
@@ -103,7 +108,8 @@ const CartIcon = () => {
                   {items && (
                      <Box p="3">
                         {items.map((item) => (
-                           <Box d="flex" alignItems="baseline">
+                           <Link href={`/sneakers/brands/${item.brand}/${item.model}`} passHref={true}>
+                           <Box as="button" d="flex" alignItems="baseline" onClick={clickedItem}>
                               <Box p="1">
                                  <Image
                                     height="30"
@@ -133,6 +139,7 @@ const CartIcon = () => {
                                  </Box>
                               </Flex>
                            </Box>
+                           </Link>
                         ))}
                      </Box>
                   )}
