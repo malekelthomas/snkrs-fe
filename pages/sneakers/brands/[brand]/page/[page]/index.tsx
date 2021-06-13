@@ -21,6 +21,7 @@ import { useState } from 'react'
 import SneakerCard from '../../../../../../components/sneaker/SneakerCard'
 import PaginateArrows from '../../../../../../components/Pagination'
 
+
 type Props = {
    error: string
    sneakers: Sneaker[]
@@ -48,9 +49,11 @@ const SneakersByBrand: NextPage<Props> = ({
          <PaginateArrows page={page} url={`/sneakers/brands/${brand}/page`}/>
          <Grid templateColumns="repeat(5, 1fr)" gap={6}>
             {sneakers &&
-               sneakers.map((sneaker: Sneaker) => (
-                  <SneakerCard sneaker={sneaker} />
-               ))}
+               sneakers.map((sneaker: Sneaker) => {
+                  if (sneaker.model !== undefined){
+                     return <SneakerCard sneaker={sneaker} />
+                  }
+               })}
          </Grid>
       </>
    )

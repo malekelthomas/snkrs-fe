@@ -1,6 +1,9 @@
 import { Box, Stack, Text } from '@chakra-ui/layout'
 import Link from 'next/link'
+import React from 'react'
 import { formatBrandName } from '../../lib/helpers/helpers'
+import CartIcon from '../cart/cart'
+import UserIcon from '../user/User'
 
 const MenuItem = ({ children, isLast, to = '/', ...rest }) => {
    return <Link href={to}>{children}</Link>
@@ -31,6 +34,8 @@ const MenuLinks = ({ isOpen, brands }) => {
                      </MenuItem>
                   )
                })}
+               <UserIcon />
+               <CartIcon />
          </Stack>
       </Box>
    )

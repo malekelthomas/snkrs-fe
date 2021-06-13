@@ -16,14 +16,8 @@ const Menu = (props) => {
          <Logo w="100px" color={['white', 'white', 'green', 'green']} />
          <MenuToggle toggle={toggle} isOpen={isOpen} />
          <MenuLinks brands={props.brands} isOpen={isOpen} />
-         <Flex whiteSpace="normal">
-            <Box padding="1">
-               <UserIcon />
-            </Box>
-            <Box padding="1">
-               <CartIcon />
-            </Box>
-         </Flex>
+               
+
       </MenuContainer>
    )
 }

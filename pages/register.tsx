@@ -8,13 +8,14 @@ import {
    Input,
    InputGroup,
    InputRightElement,
+   useToast,
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
 import { User, UserRole } from '../lib/model/User'
 import { registerUser } from '../lib/api/User'
 import { supabase } from '../lib/supabase/Supabase'
-import { useDispatch } from 'react-redux'
+
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { setUser } from '../store/slices/userSlice'
 
@@ -24,6 +25,7 @@ const Register = () => {
 
    const user = useAppSelector((state) => state.user)
    const dispatch = useAppDispatch()
+   const toast = useToast()
    return (
       <>
          <Box
@@ -62,16 +64,25 @@ const Register = () => {
                            console.log('no user in response from supabase', res)
                         }
                      })
+                     .finally(() => {
+
+                        if (user.auth_id !== undefined) {
+                           registerUser(user)
+                              .then((res) => {
+                                 console.log(res)
+                                 dispatch(setUser(user))
+                                 toast({
+                                    title: `Welcome to SNKRZ!`,
+                                    status: 'success',
+                                    duration: 3000,
+                                    isClosable: true,
+                                 })
+                                 window.location.href = `/sneakers/1`
+                              })
+                              .catch((e) => console.log(e))
+                        }
+                     })
                      .catch((e) => console.log(e))
-                  if (user.auth_id !== undefined) {
-                     registerUser(user)
-                        .then((res) => {
-                           console.log(res)
-                           dispatch(setUser(user))
-                           window.location.href = `/sneakers/`
-                        })
-                        .catch((e) => console.log(e))
-                  }
                }}
             >
                <Form>

@@ -10,13 +10,13 @@ import Loading from '../components/Loading'
 function MyApp({ Component, pageProps }) {
    supabase
    return (
-      <ChakraProvider>
-         <Provider store={store}>
+      <Provider store={store}>
             <PersistGate loading={<Loading />} persistor={persistor}>
+            <ChakraProvider>
                <Component {...pageProps} />
+      </ChakraProvider>
             </PersistGate>
          </Provider>
-      </ChakraProvider>
    )
 }
 
