@@ -1,10 +1,14 @@
-import { Box, Image, Badge } from '@chakra-ui/react'
+import { Box, Image, Badge, Flex } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
 import { newProduct, formatName } from '../../lib/helpers/helpers'
 import { Sneaker } from '../../lib/model/Sneaker'
+import SneakerSelector from './SneakerSelector'
+import { useState } from 'react'
 
 const SneakerCard = ({ sneaker }) => {
+   const [show, setShow] = useState<boolean>(false)
+
    return (
       <Link
          href={`/sneakers/brands/${sneaker.brand}/${encodeURIComponent(
@@ -23,20 +27,25 @@ const SneakerCard = ({ sneaker }) => {
                src={sneaker.photos ? sneaker.photos[0] : ''}
                alt={sneaker.model}
             />
-            <Box p="6">
-               <Box d="flex" alignItems="baseline">
+            <Box id="sneaker-card-info">
+               <Flex justifyContent="center">
                   {newProduct(sneaker.release_date) && (
-                     <Badge borderRadius="full" px="2" colorScheme="red">
-                        New Release
+                     <Badge
+                        borderRadius="full"
+                        colorScheme="red"
+                        fontSize="x-small"
+                     >
+                        New
                      </Badge>
                   )}
-               </Box>
+               </Flex>
+
                <Box
                   mt="1"
                   fontWeight="semibold"
-                  as="h4"
+                  as="p"
                   lineHeight="tight"
-                  isTruncated
+                  fontSize="xs"
                >
                   {sneaker.model ? formatName(sneaker.model) : ''}
                </Box>

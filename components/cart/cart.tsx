@@ -42,7 +42,7 @@ const CartIcon = () => {
    }
 
    const [order, setOrder] = useState<Order>()
-   const [popOverOpen, setPopOverOpen] = useState<boolean>(false);
+   const [popOverOpen, setPopOverOpen] = useState<boolean>(false)
 
    const checkout = () => {
       let cr: CheckoutRequest = {
@@ -89,58 +89,74 @@ const CartIcon = () => {
       }
    }
 
-   const clickedItem = () => {
+   const toggle = () => {
       setPopOverOpen(!popOverOpen)
    }
    return (
-      <Popover isOpen={popOverOpen}>
+      <Popover isOpen={popOverOpen} closeOnBlur={true}>
          <PopoverTrigger>
-            <Button onClick={clickedItem}>
+            <Button onClick={toggle}>
                <AiOutlineShoppingCart size="25px" color="black" />
             </Button>
          </PopoverTrigger>
          <PopoverContent>
             <PopoverArrow />
-            <PopoverCloseButton />
+            <PopoverCloseButton onClick={toggle} />
             <PopoverHeader>Cart</PopoverHeader>
             <PopoverBody>
                <Flex justifyContent="space-evenly">
                   {items && (
                      <Box p="3">
-                        {items.map((item) => (
-                           <Link href={`/sneakers/brands/${item.brand}/${item.model}`} passHref={true}>
-                           <Box as="button" d="flex" alignItems="baseline" onClick={clickedItem}>
-                              <Box p="1">
-                                 <Image
-                                    height="30"
-                                    width="30"
-                                    src={item.photo}
-                                    alt={item.model}
-                                 />
-                              </Box>
-                              <Box>
-                                 <Text fontSize="xs">
-                                    {' '}
-                                    {formatName(item.model)}
-                                 </Text>
-                                 <Text fontSize="xs">x{item.quantity}</Text>
-                                 <Text fontSize="xs">Size: {item.size}</Text>
-                              </Box>
-                              <Flex
-                                 flexDirection="column"
-                                 justifyContent="center"
-                              >
-                                 <Box as="button">
-                                    <TiDeleteOutline
-                                       onClick={() => {
-                                          removeItem(item)
-                                       }}
-                                    />
-                                 </Box>
-                              </Flex>
-                           </Box>
-                           </Link>
-                        ))}
+                        {items.map((item, i) => {
+                           if (i <= 4) {
+                              return (
+                                 <Link
+                                    href={`/sneakers/brands/${item.brand}/${item.model}`}
+                                    passHref={true}
+                                 >
+                                    <Box
+                                       as="button"
+                                       d="flex"
+                                       alignItems="baseline"
+                                       onClick={toggle}
+                                    >
+                                       <Box p="1">
+                                          <Image
+                                             height="30"
+                                             width="30"
+                                             src={item.photo}
+                                             alt={item.model}
+                                          />
+                                       </Box>
+                                       <Box color="black">
+                                          <Text fontSize="xs">
+                                             {' '}
+                                             {formatName(item.model)}
+                                          </Text>
+                                          <Text fontSize="xs">
+                                             x{item.quantity}
+                                          </Text>
+                                          <Text fontSize="xs">
+                                             Size: {item.size}
+                                          </Text>
+                                       </Box>
+                                       <Flex
+                                          flexDirection="column"
+                                          justifyContent="center"
+                                       >
+                                          <Box as="button">
+                                             <TiDeleteOutline
+                                                onClick={() => {
+                                                   removeItem(item)
+                                                }}
+                                             />
+                                          </Box>
+                                       </Flex>
+                                    </Box>
+                                 </Link>
+                              )
+                           }
+                        })}
                      </Box>
                   )}
                </Flex>
@@ -148,7 +164,7 @@ const CartIcon = () => {
 
             <PopoverFooter>
                <Flex justifyContent="space-evenly">
-                  <Text>
+                  <Text color="black">
                      Total:{' '}
                      {new Intl.NumberFormat('en-US', {
                         style: 'currency',

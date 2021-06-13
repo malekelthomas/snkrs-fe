@@ -34,8 +34,8 @@ const MenuLinks = ({ isOpen, brands }) => {
                      </MenuItem>
                   )
                })}
-               <UserIcon />
-               <CartIcon />
+            <UserIcon />
+            <CartIcon />
          </Stack>
       </Box>
    )

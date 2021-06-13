@@ -22,38 +22,39 @@ type Props = {
    brands: string[]
 }
 const SneakerInfo: NextPage<Props> = ({ sneaker, brands }) => {
-
-   if (router.isFallback){
-      return (
-         <div>Loading...</div>
-      )
+   if (router.isFallback) {
+      return <div>Loading...</div>
    }
    return (
       <>
          <Menu brands={brands} />
-         <Flex justifyContent="center">
-            {sneaker && (
-               <>
+         {sneaker && (
+            <>
+               <Flex
+                  justifyContent="center"
+                  p="5"
+                  flexDirection="column"
+                  alignItems="center"
+               >
+                  <Image
+                     src={sneaker.photos ? sneaker.photos[0] : ''}
+                     alt={sneaker.model}
+                  />
+
+                  <Text>{`${formatName(sneaker.model)}`}</Text>
+               </Flex>
+               <Text>
+                  {sneaker.release_date
+                     ? `Release Date: ${sneaker.release_date}`
+                     : ''}
+               </Text>
+               <Flex flexDirection="column" justifyContent="center">
                   <Box>
-                     <Image
-                        src={sneaker.photos ? sneaker.photos[0] : ''}
-                        alt={sneaker.model}
-                     />
-                     <Text>
-                        {sneaker.release_date
-                           ? `Release Date: ${sneaker.release_date}`
-                           : ''}
-                     </Text>
+                     <SneakerSelector sneaker={sneaker} />
                   </Box>
-                  <Flex flexDirection="column" justifyContent="center">
-                     <Box>
-                        <Text>{`${formatName(sneaker.model)}`}</Text>
-                        <SneakerSelector sneaker={sneaker} />
-                     </Box>
-                  </Flex>
-               </>
-            )}
-         </Flex>
+               </Flex>
+            </>
+         )}
       </>
    )
 }

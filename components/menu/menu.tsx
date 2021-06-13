@@ -16,8 +16,6 @@ const Menu = (props) => {
          <Logo w="100px" color={['white', 'white', 'green', 'green']} />
          <MenuToggle toggle={toggle} isOpen={isOpen} />
          <MenuLinks brands={props.brands} isOpen={isOpen} />
-               
-
       </MenuContainer>
    )
 }

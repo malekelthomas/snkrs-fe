@@ -13,7 +13,11 @@ import {
    getSneakersWPagination,
 } from '../../../../../../lib/api/Sneakers'
 import { Sneaker } from '..../../../lib/model/Sneaker'
-import { formatBrandName, formatName, shuffleArray } from '../../../../../../lib/helpers/helpers'
+import {
+   formatBrandName,
+   formatName,
+   shuffleArray,
+} from '../../../../../../lib/helpers/helpers'
 import SneakerSelector from '../../../../../../components/sneaker/SneakerSelector'
 import qs from 'query-string'
 import { CartItem } from '../../../../../../lib/model/Cart'
@@ -21,12 +25,11 @@ import { useState } from 'react'
 import SneakerCard from '../../../../../../components/sneaker/SneakerCard'
 import PaginateArrows from '../../../../../../components/Pagination'
 
-
 type Props = {
    error: string
    sneakers: Sneaker[]
    brand: string
-   brands: string[],
+   brands: string[]
    page: string
 }
 
@@ -35,7 +38,7 @@ const SneakersByBrand: NextPage<Props> = ({
    sneakers,
    brand,
    brands,
-   page
+   page,
 }) => {
    if (error) {
       console.error(error)
@@ -44,13 +47,13 @@ const SneakersByBrand: NextPage<Props> = ({
       <>
          <Menu brands={brands} />
          <Flex justifyContent={'center'}>
-            <Heading>{brand ? formatBrandName(brand): ''}</Heading>
+            <Heading>{brand ? formatBrandName(brand) : ''}</Heading>
          </Flex>
-         <PaginateArrows page={page} url={`/sneakers/brands/${brand}/page`}/>
+         <PaginateArrows page={page} url={`/sneakers/brands/${brand}/page`} />
          <Grid templateColumns="repeat(5, 1fr)" gap={6}>
             {sneakers &&
                sneakers.map((sneaker: Sneaker) => {
-                  if (sneaker.model !== undefined){
+                  if (sneaker.model !== undefined) {
                      return <SneakerCard sneaker={sneaker} />
                   }
                })}
@@ -89,7 +92,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
    const { brand, page } = context.params
    try {
-      const sneakers = await getSneakersByBrandWPagination(brand as string, page as string)
+      const sneakers = await getSneakersByBrandWPagination(
+         brand as string,
+         page as string
+      )
       console.log(sneakers)
       const brands = await getBrands()
       return {
@@ -98,13 +104,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
             brand,
             brands,
             sneakers,
-            page
+            page,
          },
       }
    } catch (err) {
       return {
          props: {
-            brands:null,
+            brands: null,
             brand: null,
             error: err.message,
             sneakers: null,

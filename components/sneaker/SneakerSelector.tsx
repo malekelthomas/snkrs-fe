@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import { Sneaker, SiteSoldOn, SizePrice } from '../../lib/model/Sneaker'
 import { CartItem } from '../../lib/model/Cart'
-import { Box, Button, useToast } from '@chakra-ui/react'
+import { Box, Button, Stack, useToast } from '@chakra-ui/react'
 import { useAppDispatch } from '../../hooks'
 import { addToCart } from '../../store/slices/cartSlice'
 import { formatName } from '../../lib/helpers/helpers'
@@ -27,7 +27,7 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
          photo: sneaker.photos ? sneaker.photos[0] : '',
          quantity: 1,
          site: selectedSite,
-         brand: sneaker.brand
+         brand: sneaker.brand,
       }
       setCartItem(addedCartItem)
       toast({
@@ -59,10 +59,11 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
    }
    return (
       <>
+      <Stack>
          {sneaker &&
             sneaker.sites_sizes_prices &&
             sneaker.sites_sizes_prices.sites_sizes_prices && (
-               <Select onChange={siteChange} placeholder="Select Site">
+               <Select onChange={siteChange} placeholder="Select site to purchase from">
                   {Object.keys(
                      sneaker.sites_sizes_prices.sites_sizes_prices
                   ).map((key) => (
@@ -72,7 +73,7 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
             )}
 
          {selectedSite && (
-            <Select placeholder="Select Size" onChange={sizeChange}>
+            <Select placeholder="Select Size" onChange={sizeChange} minHeight={30} width="75%">
                {Object.values(
                   sneaker.sites_sizes_prices.sites_sizes_prices[selectedSite]
                ).map((val: any) =>
@@ -92,6 +93,7 @@ const SneakerSelector: NextPage<Props> = ({ sneaker }) => {
                </Button>
             </Box>
          )}
+      </Stack>
       </>
    )
 }

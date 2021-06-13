@@ -10,12 +10,21 @@ import {
    Flex,
 } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { AiOutlineUser } from 'react-icons/ai'
-import { useAppSelector } from '../../hooks'
+import { useAppSelector, useAppDispatch } from '../../hooks'
+import { clearUser } from '../../store/slices/userSlice'
 
 const UserIcon = () => {
    const user = useAppSelector((state) => state.user)
+
+   const dispatch = useAppDispatch()
+   const router = useRouter()
+   const logout = () => {
+      dispatch(clearUser())
+      router.push(`/sneakers/1`)
+   }
    return (
       <Popover>
          <PopoverTrigger>
@@ -24,28 +33,39 @@ const UserIcon = () => {
             </Button>
          </PopoverTrigger>
          <PopoverContent>
-            <Flex justifyContent="space-evenly">
-               <PopoverArrow />
-               <PopoverCloseButton />
-               {user.auth_id == undefined ||
-                  (user.auth_id == '' && (
-                     <>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            {user.auth_id == undefined ||
+               (user.auth_id == '' && (
+                  <>
+                     <Flex justifyContent="space-between">
                         <Link href="/login">
-                           <Text as="button">Login</Text>
+                           <Text as="button" color="black">
+                              Login
+                           </Text>
                         </Link>
                         <Divider />
                         <Link href="/register">
-                           <Text as="button">Register</Text>
+                           <Text as="button" color="black">
+                              Register
+                           </Text>
                         </Link>
-                     </>
-                  ))}
+                     </Flex>
+                  </>
+               ))}
 
-               {user.auth_id.length > 0 && (
+            {user.auth_id.length > 0 && (
+               <>
                   <Link href="#">
-                     <Text as="button">My Orders</Text>
+                     <Text as="button" color="black">
+                        My Orders
+                     </Text>
                   </Link>
-               )}
-            </Flex>
+                  <Text as="button" color="black" onClick={logout}>
+                     Logout
+                  </Text>
+               </>
+            )}
          </PopoverContent>
       </Popover>
    )

@@ -65,7 +65,6 @@ const Register = () => {
                         }
                      })
                      .finally(() => {
-
                         if (user.auth_id !== undefined) {
                            registerUser(user)
                               .then((res) => {

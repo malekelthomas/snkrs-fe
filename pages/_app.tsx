@@ -11,12 +11,12 @@ function MyApp({ Component, pageProps }) {
    supabase
    return (
       <Provider store={store}>
-            <PersistGate loading={<Loading />} persistor={persistor}>
+         <PersistGate loading={<Loading />} persistor={persistor}>
             <ChakraProvider>
                <Component {...pageProps} />
-      </ChakraProvider>
-            </PersistGate>
-         </Provider>
+            </ChakraProvider>
+         </PersistGate>
+      </Provider>
    )
 }
 

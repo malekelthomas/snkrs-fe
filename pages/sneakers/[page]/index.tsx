@@ -23,8 +23,8 @@ import { CartItem } from '../../../lib/model/Cart'
 import { useState } from 'react'
 import SneakerCard from '../../../components/sneaker/SneakerCard'
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
-import {useRouter } from 'next/router'
-import PaginateArrows from '../../../components/Pagination';
+import { useRouter } from 'next/router'
+import PaginateArrows from '../../../components/Pagination'
 type Props = {
    sneakers: Sneaker[]
    brands: string[]
@@ -41,13 +41,12 @@ const Sneakers: NextPage<Props> = ({ error, sneakers, brands, page }) => {
    return (
       <>
          <Menu brands={brands} />
-            <PaginateArrows page={page} url={"/sneakers"}/>
+         <PaginateArrows page={page} url={'/sneakers'} />
          <Flex justifyContent="center">
-               <Grid templateColumns="repeat(5, 1fr)" gap={5}>
-                  {sneakers &&
-                     sneakers.map((sneaker) => <SneakerCard sneaker={sneaker} />)}
-               </Grid>
-
+            <Grid templateColumns="repeat(5, 1fr)" gap={5}>
+               {sneakers &&
+                  sneakers.map((sneaker) => <SneakerCard sneaker={sneaker} />)}
+            </Grid>
          </Flex>
       </>
    )
@@ -62,7 +61,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
    let pageNum = 1
    while (count > 0) {
       params.push({
-         params: { page: ""+pageNum },
+         params: { page: '' + pageNum },
       })
       pageNum += 1
       count -= pageSize
@@ -83,7 +82,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
          props: {
             sneakers,
             brands,
-            page: params.page
+            page: params.page,
          },
       }
    } catch (err) {
